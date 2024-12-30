@@ -1736,6 +1736,18 @@ section,
   color: #ed18db !important;
 }
 
+.bg-blue{
+  background-color: #00e9fe !important;
+}
+
+.bg-orange{
+  background-color: #fe8f00 !important;
+}
+
+.bg-purple{
+  background-color: #ed18db !important;
+}
+
 /* General Service Styles */
 .service-item {
   background-size: cover !important; /* Ensures the image covers the entire div */
@@ -1820,4 +1832,40 @@ video {
   max-width: 400px;
   height: auto;
   width: auto;
+}
+
+.partners img {
+  opacity: 1;
+  transition: 0.3s;
+  filter: grayscale(100);
+}
+
+.partners img:hover {
+  filter: none;
+  opacity: 1;
+}
+
+.swiper-slide div{
+  text-align: center;
+  font-size:smaller;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+
+.member-info h4 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.starter-section {
+  margin-top: -30px;
+  padding-top: 10px;
+}
+
+.card img {
+  object-fit: contain;
+  height: 200px;
+}
+.card-title {
+  font-weight: bold;
 }

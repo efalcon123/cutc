@@ -9,6 +9,20 @@
 (function() {
   "use strict";
 
+  // Function to load external HTML into placeholders
+  function loadHTML(id, url) {
+    fetch(url)
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById(id).innerHTML = data;
+      })
+      .catch(error => console.error('Error loading component:', error));
+  }
+
+  // Load the header and footer
+  loadHTML('header-placeholder', '/header.html');
+  loadHTML('footer-placeholder', '/footer.html');
+
   /**
    * Apply .scrolled class to the body as the page is scrolled down
    */
