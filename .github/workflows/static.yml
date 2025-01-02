@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload the files in the directory, excluding the folder itself
-          path: 'cutc/**'
+          path: './'
 
       - name: Deploy to GitHub Pages
         id: deployment
