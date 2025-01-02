@@ -20,7 +20,7 @@
   }
 
   // Load the header and footer
-  const basePath = window.location.origin + "";
+  const basePath = window.location.origin + "/cutc";
 
   loadHTML('header-placeholder', `${basePath}/header.html`);
   loadHTML('footer-placeholder', `${basePath}/footer.html`);
