@@ -20,8 +20,11 @@
   }
 
   // Load the header and footer
-  loadHTML('header-placeholder', 'header.html');
-  loadHTML('footer-placeholder', 'footer.html');
+  const basePath = window.location.origin + "";
+
+  loadHTML('header-placeholder', `${basePath}/header.html`);
+  loadHTML('footer-placeholder', `${basePath}/footer.html`);
+
 
   /**
    * Apply .scrolled class to the body as the page is scrolled down
