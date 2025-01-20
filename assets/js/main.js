@@ -1,30 +1,93 @@
-/**
-* Template Name: Gp
-* Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
-* Updated: Aug 15 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 (function() {
   "use strict";
 
   // Function to load external HTML into placeholders
-  function loadHTML(id, url) {
+  function loadHTML(elementId, url) {
     fetch(url)
       .then(response => response.text())
       .then(data => {
-        document.getElementById(id).innerHTML = data;
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.innerHTML = data;
+          // After loading the HTML, initialize the burger menu if it's the header
+          if (elementId === 'header') {
+            initializeBurgerMenu(); // Initialize burger menu after loading the header
+          }
+        }
       })
-      .catch(error => console.error('Error loading component:', error));
+      .catch(error => console.error('Error loading HTML:', error));
+  }
+
+  // Function to initialize the burger menu and dropdown functionality
+  function initializeBurgerMenu() {  
+    const burgerIcon = document.querySelector('.mobile-nav-toggle');
+    const navMenu = document.querySelector('.navmenu');
+
+    // Initialize burger menu
+    console.log(burgerIcon, navMenu);
+    if (burgerIcon && navMenu) {
+      burgerIcon.addEventListener('click', function() {
+        navMenu.classList.toggle('mobile-nav-active');
+        burgerIcon.classList.toggle('bi-x');
+        burgerIcon.classList.toggle('bi-list');
+        document.querySelector('body').classList.toggle('mobile-nav-active');
+      });
+    }
+
+    // Handle dropdown menu click
+    document.querySelectorAll('.navmenu .toggle-dropdown').forEach(dropdown => {
+      dropdown.addEventListener('click', function(e) {
+        e.preventDefault();
+        const parentListItem = this.closest('li');  // Find the parent list item
+        parentListItem.classList.toggle('active');
+        parentListItem.querySelector('ul').classList.toggle('dropdown-active');
+      });
+    });
+
+    // Close the menu if a non-dropdown item is clicked
+    document.querySelectorAll('#navmenu a').forEach(navmenu => {
+      navmenu.addEventListener('click', (e) => {
+        const parentListItem = e.target.closest('li');
+        // If the clicked item is not part of a dropdown (i.e., does not have the 'dropdown' class)
+        if (!parentListItem.classList.contains('dropdown')) {
+          if (document.querySelector('.mobile-nav-active')) {
+            mobileNavToggle(); // Close the menu
+          }
+        }
+      });
+    });
+
+    // Reset the burger menu when clicking hash links (i.e., links with #)
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        // Prevent closing the menu on hash links
+        if (!e.target.hash) return; // Ensure this is a hash link
+        // Only toggle the menu if it's not already active
+        if (document.querySelector('.mobile-nav-active') && !e.target.closest('.mobile-nav-toggle')) {
+          mobileNavToggle();
+        }
+      });
+    });
+  }
+
+  // Function to toggle the mobile navigation
+  function mobileNavToggle() {
+    const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle'); // Ensure this element exists
+    if (mobileNavToggleBtn) { // Check if the element is available before toggling
+      document.querySelector('body').classList.toggle('mobile-nav-active');
+      mobileNavToggleBtn.classList.toggle('bi-list');
+      mobileNavToggleBtn.classList.toggle('bi-x');
+    } else {
+      console.error('Mobile nav toggle button not found!');
+    }
   }
 
   // Load the header and footer
-  const basePath = window.location.origin + "/cutc";
+  const basePath = window.location.origin;
 
-  loadHTML('header-placeholder', `${basePath}/header.html`);
+  // Assuming `header` and `footer-placeholder` are the placeholders for dynamic content
+  loadHTML('header', `${basePath}/header.html`);
   loadHTML('footer-placeholder', `${basePath}/footer.html`);
-
 
   /**
    * Apply .scrolled class to the body as the page is scrolled down
@@ -42,25 +105,21 @@
   document.addEventListener("DOMContentLoaded", () => {
     const video = document.querySelector("video");
     const videoContainer = document.querySelector(".video-container");
-  
-    video.addEventListener("canplaythrough", () => {
-      // Add a 'loaded' class to the container when the video is ready to play
-      videoContainer.classList.add("loaded");
-    });
+
+    if (video && videoContainer) {
+      video.addEventListener("canplaythrough", () => {
+        // Add a 'loaded' class to the container when the video is ready to play
+        videoContainer.classList.add("loaded");
+      });
+    } 
   });
 
   /**
    * Mobile nav toggle
    */
   const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
-
-  function mobileNavToogle() {
-    document.querySelector('body').classList.toggle('mobile-nav-active');
-    mobileNavToggleBtn.classList.toggle('bi-list');
-    mobileNavToggleBtn.classList.toggle('bi-x');
-  }
   if (mobileNavToggleBtn) {
-    mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+    mobileNavToggleBtn.addEventListener('click', mobileNavToggle);
   }
 
   /**
@@ -69,10 +128,9 @@
   document.querySelectorAll('#navmenu a').forEach(navmenu => {
     navmenu.addEventListener('click', () => {
       if (document.querySelector('.mobile-nav-active')) {
-        mobileNavToogle();
+        mobileNavToggle();
       }
     });
-
   });
 
   /**
@@ -235,4 +293,17 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  document.addEventListener("DOMContentLoaded", () => {
+    // Check if the current page is the root page
+    const isRootPage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+  
+    const header = document.querySelector('.index-page .header');
+  
+    if (header) {
+      if (!isRootPage) {
+        // Set background color to remove transparency if it's not the root page
+        header.style.setProperty('--background-color', 'rgba(0, 0, 0, .8)'); // Example: solid white background
+      }
+    }
+  });
 })();

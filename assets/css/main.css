@@ -200,8 +200,9 @@ h6 {
 
   .header .btn-getstarted {
     order: 2;
-    margin: 0 15px 0 0;
+    margin: 0 40px 0 0;
     padding: 6px 15px;
+    display:none;
   }
 
   .header .navmenu {
@@ -333,6 +334,8 @@ h6 {
     left: -100%;
     visibility: visible;
   }
+
+
 }
 
 /* Navmenu - Mobile */
@@ -403,9 +406,12 @@ h6 {
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
+    background-color: #fff;
+  }
+  
+  .navmenu .dropdown.active > a.toggle-dropdown {
     background-color: var(--nav-dropdown-hover-color);
   }
-
   .navmenu .active i,
   .navmenu .active:focus i {
     transform: rotate(180deg);
@@ -429,7 +435,7 @@ h6 {
 
   .navmenu .dropdown>.dropdown-active {
     display: block;
-    background-color: rgba(33, 37, 41, 0.03);
+    background-color: #fff;
   }
 
   .mobile-nav-active {
@@ -1869,3 +1875,4 @@ video {
 .card-title {
   font-weight: bold;
 }
+
